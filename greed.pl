@@ -2,15 +2,15 @@
 /* The strategy I'm using might be unusual so yeah, I added comments :-) */
 
 /* score for single faces */
-score(single(F),100) :- F = 1,!.
-score(single(F),50) :- F = 5,!.
+score(single(1),100) :- !.
+score(single(5),50) :- !.
 score(single(_),0).
-/* score for pair is just two * single*/
+/* score for pair is just 2 * single */
 score(pair(F),S) :- score(single(F),H),S is 2*H.
 /* score for triple */
-score(triple(F),1000) :- F = 1,!.
+score(triple(1),1000) :- !.
 score(triple(F),S) :- S is 100*F.
-/* squeeze together 2 single in a pair, single + pair in triple */
+/* squeeze together 2 single in a pair, or single + pair in triple */
 squeeze(single(F),single(F),pair(F)).
 squeeze(pair(F),single(F),triple(F)).
 /* squeeze a roll if possible, assume sorting by face */
