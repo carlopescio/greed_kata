@@ -20,24 +20,24 @@ squeezeSortedRoll([],[]).
 /* the score of a squeezed roll is now just the sum of the scores */
 scoreSqueezedRoll([],0).
 scoreSqueezedRoll([F|Fs],S) :- score(F,S1),scoreSqueezedRoll(Fs,S2),S is S1+S2.
-/* so a greedy score is the score of a sorted - squeezed roll */
-greedyScore(R,N) :- sort(0,@=<,R,S),squeezeSortedRoll(S,Q),scoreSqueezedRoll(Q,N).
+/* so a greed score is the score of a sorted - squeezed roll */
+greedScore(R,N) :- sort(0,@=<,R,S),squeezeSortedRoll(S,Q),scoreSqueezedRoll(Q,N).
 
 /* roll factory :-) for convenience */
 rollFromFaces([],[]).
 rollFromFaces([F|Fs], [single(F)|R]) :- rollFromFaces(Fs,R).
 /* even more convenience */
-greedyScoreFromFaces(F,S) :- rollFromFaces(F,R),greedyScore(R,S).
+greedScoreFromFaces(F,S) :- rollFromFaces(F,R),greedScore(R,S).
 
 /* test cases, exec with run_tests. */
 :- use_module(library(plunit)).
-:- begin_tests(greedy).
-test(case55553) :- greedyScoreFromFaces([5,5,5,5,3],550).
-test(case23462) :- greedyScoreFromFaces([2,3,4,6,2],0).
-test(case34533) :- greedyScoreFromFaces([3,4,5,3,3],350).
-test(case15124) :- greedyScoreFromFaces([1,5,1,2,4],250).
-test(case55555) :- greedyScoreFromFaces([5,5,5,5,5],600).
-:- end_tests(greedy).
+:- begin_tests(greed).
+test(case55553) :- greedScoreFromFaces([5,5,5,5,3],550).
+test(case23462) :- greedScoreFromFaces([2,3,4,6,2],0).
+test(case34533) :- greedScoreFromFaces([3,4,5,3,3],350).
+test(case15124) :- greedScoreFromFaces([1,5,1,2,4],250).
+test(case55555) :- greedScoreFromFaces([5,5,5,5,5],600).
+:- end_tests(greed).
 
 
 
